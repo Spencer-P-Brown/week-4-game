@@ -8,7 +8,7 @@ var crystals = {
 	orange : 0,
 	purple: 0,
 	green: 0,
-	blue:0,
+	blue: 0,
 };
 
 //tell jquery to wait until the page is ready before starting to run javascript then run newGame
@@ -30,14 +30,23 @@ function newGame() {
 	score = 0;
 	goal = Math.floor((Math.random() * 102) + 19);
 
+	$(".score").html(score);
 	$(".goal").html(goal);
 	console.log(goal);
-	//still need to assign random number values to crystals object
-};
 
-/*Need event listeners on each crystal that updates player score
-need a function to check player score, if score === goal add wins += 1, else if score > goal losses +=1
-else if score < goal do nothing*/
+	
+	$('.crystal').each(function() {
+		var imgScore = Math.floor((Math.random() *12) +1)
+		$(this).attr('score', imgScore)
+		$(this).click(function() {
+			score += imgScore;
+		    $(".score").html(score);
+		    console.log(score); 
+		    console.log(imgScore);
+		    scoreCheck();
+		})
+	})
+};
 
 function scoreCheck(){
 	//declare 2 new vars
@@ -46,16 +55,17 @@ function scoreCheck(){
 	//if score matches goal win is true
 	if(score === goal){
 		win = true;
-		$("wins").html(wins += 1);
+		$(".wins").html(wins += 1);
 	}
 	//if player busts lose is true
 	else if(score > goal){
 		lose = true;
-		$("losses").html(losses += 1);
+		$(".losses").html(losses += 1);
 	}
+	console.log(wins, losses);
 	//if either win or lose is true run newGame
 	if(win === true || lose === true){
 		newGame();
 	}
-	//maybe run this function after every click event??
+	//maybe run this function after every click event??	
 };
